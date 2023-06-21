@@ -61,6 +61,26 @@ switch (choice)
         Console.WriteLine(response);
         break;
 
+    case 4:
+        Console.WriteLine("Please enter employee number");
+        int empN = Convert.ToInt32(Console.ReadLine());
+        try
+        {
+            Employee details = empObj.GetEmployeeById(empN);
+            Console.WriteLine("Employee Number "+details.empNo);
+            Console.WriteLine("Employee Number " + details.empName);
+            Console.WriteLine("Employee Number " + details.empDesignation);
+            Console.WriteLine("Employee Number " + details.empSalary);
+            Console.WriteLine("Employee Number " + details.empIsPerm);
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        break;
+    case 5:
+        break;
+
     default:
         break;
 }

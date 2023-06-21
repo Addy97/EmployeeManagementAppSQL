@@ -9,7 +9,13 @@ namespace EmployeeManagementAppSQL
 {
     internal class Employee
     {
-        SqlConnection con = new SqlConnection("server=41148E0FF02E50D;database=EmployeeManagement;integrated security=true");
+        public int empNo;
+        public string empName;
+        public string empDesignation;
+        public double empSalary;
+        public bool empIsPerm;
+
+        SqlConnection con = new SqlConnection("server=4737B72EAB2C5A6;database=EmployeeManagement;integrated security=true");
 
         public string AddNewEmployee(int p_empNo, string p_empname, string p_empDesignation, double p_empSalary, bool p_isPerm)
         {
@@ -96,6 +102,32 @@ namespace EmployeeManagementAppSQL
             {
                 con.Close();
                 return ex.Message;
+            }
+        }
+
+        public Employee GetEmployeeById(int p_empNo)
+        {
+            SqlCommand cmd_getbyid = new SqlCommand("select * from EmployeeDetails where empNo=@empNo", con);
+            cmd_getbyid.Parameters.AddWithValue("empNo", p_empNo);
+            SqlDataReader readEmp = null;
+
+            try
+            {
+                con.Open();
+                readEmp= cmd_getbyid.ExecuteReader();
+                if (readEmp.Read())
+                {
+                    Employee emp = new Employee();
+                    emp.empNo = readEmp[0];
+                    emp.empName = readEmp[1];
+                    emp.empDesignation = readEmp[2];
+                    emp.empSalary = readEmp[3];
+                    emp.empIsPerm = readEmp[4];
+                }
+            }
+            catch(Exception ex)
+            {
+                return 
             }
         }
     }
