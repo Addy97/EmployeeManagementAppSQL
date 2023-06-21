@@ -1,0 +1,57 @@
+create database EmployeeManagement
+ use EmployeeManagement
+
+create table EmployeeDetails
+(
+ empNo int,
+ empName varchar(20),
+ empDesignation varchar(20),
+ empSalary bigint,
+ empIsPerm bit
+ )
+
+ insert into EmployeeDetails values
+
+ select * from EmployeeDetails
+
+
+
+--Get Employee by Id
+create procedure proc_getEmpById(@empNo int)
+as
+begin
+ select * from EmployeeDetails where empNo = @empNo
+end
+
+--Get All Employee
+create procedure proc_getAllEmp
+as
+begin
+ select * from EmployeeDetails
+end
+
+--Insert Employee
+create procedure proc_AddNewEmployee(@empNo int out,@empName varchar(20), @empdesignation varchar(20), @empsalary bigint, @empisperm bit)
+as
+begin
+	declare @newEmpNo int = 0;
+	set @newEmpNo = (select max(empNo) +1 from EmployeeDetails)
+ insert into EmployeeDetails values(@newEmpNo,@empName,@empdesignation,@empsalary,@empisperm)
+end
+
+--delete Employee
+create procedure proc_DeleteEmployee(@empNo int)
+as
+begin
+	delete from EmployeeDetails where empNo = @empNo
+end
+
+--Update Employee
+create procedure proc_updateEmployee( @empNo int,@empname varchar(20),@empdesignation varchar(20),@empsalary bigint, @empisperm bit)
+as
+begin
+	update EmployeeDetails set empName=@empname, empDesignation=@empdesignation,empSalary=@empsalary,empIsPerm=@empisperm
+	where empNo=@empNo
+end
+
+
