@@ -115,19 +115,53 @@ namespace EmployeeManagementAppSQL
             {
                 con.Open();
                 readEmp= cmd_getbyid.ExecuteReader();
+                Employee emp = new Employee();
                 if (readEmp.Read())
-                {
-                    Employee emp = new Employee();
-                    emp.empNo = readEmp[0];
-                    emp.empName = readEmp[1];
-                    emp.empDesignation = readEmp[2];
-                    emp.empSalary = readEmp[3];
-                    emp.empIsPerm = readEmp[4];
+                {                   
+                    emp.empNo = Convert.ToInt32(readEmp[0]);
+                    emp.empName = readEmp[1].ToString();
+                    emp.empDesignation = readEmp[2].ToString();
+                    emp.empSalary = Convert.ToDouble(readEmp[3]);
+                    emp.empIsPerm = Convert.ToBoolean(readEmp[4]);                    
                 }
+                readEmp.Close();
+                con.Close();
+                return emp;
             }
             catch(Exception ex)
             {
-                return 
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public List<Employee> GetAllEmployee()
+        {
+            SqlCommand cmd_getAll = new SqlCommand("select * from EmployeeDetails", con);
+            SqlDataReader readAllEmp = null;
+            List<Employee> empList = new List<Employee>();
+
+            try
+            {
+                con.Open();
+                readAllEmp= cmd_getAll.ExecuteReader();
+                while(readAllEmp.Read())
+                {
+                    empList.Add(new Employee()
+                    {
+                        empNo = Convert.ToInt32(readAllEmp[0]),
+                        empName = readAllEmp[1].ToString(),
+                        empDesignation = readAllEmp[2].ToString(),
+                        empSalary = Convert.ToDouble(readAllEmp[3]),
+                        empIsPerm = Convert.ToBoolean(readAllEmp[4])
+                    });
+                }
+                readAllEmp.Close();
+                con.Close();
+                return empList;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
     }

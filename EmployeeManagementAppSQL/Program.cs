@@ -68,10 +68,10 @@ switch (choice)
         {
             Employee details = empObj.GetEmployeeById(empN);
             Console.WriteLine("Employee Number "+details.empNo);
-            Console.WriteLine("Employee Number " + details.empName);
-            Console.WriteLine("Employee Number " + details.empDesignation);
-            Console.WriteLine("Employee Number " + details.empSalary);
-            Console.WriteLine("Employee Number " + details.empIsPerm);
+            Console.WriteLine("Employee Name " + details.empName);
+            Console.WriteLine("Employee Designation " + details.empDesignation);
+            Console.WriteLine("Employee Salary " + details.empSalary);
+            Console.WriteLine("Employee Is Permanent " + details.empIsPerm);
         }
         catch(Exception ex)
         {
@@ -79,6 +79,17 @@ switch (choice)
         }
         break;
     case 5:
+        List<Employee> allDetails = new List<Employee>();
+        allDetails = empObj.GetAllEmployee();
+        foreach(var item in allDetails)
+        {
+            Console.WriteLine("Employee Number " + item.empNo);
+            Console.WriteLine("Employee Name " + item.empName);
+            Console.WriteLine("Employee Designation " + item.empDesignation);
+            Console.WriteLine("Employee Salary " + item.empSalary);
+            Console.WriteLine("Employee Is Permanent " + item.empIsPerm);
+            Console.WriteLine("`----------------------------------------------------");
+        }
         break;
 
     default:
